@@ -21,23 +21,36 @@ export default {
     BNavbarBrand,
   },
   data() {
-    const appName = ''
+    const appName = '',
+    apiData = null
 
     return {
-      appName,
+      appName, apiData
     }
   },
   created() {
     // Implemente aqui o GET dos dados da API REST
     // para que isso ocorra na inicialização da pagina
+
+    this.fetchApiData();
     this.appName = 'Melhor Frete'
   },
   methods: {
     // Implemente aqui os metodos utilizados na pagina
-    methodFoo() {
-      console.log(this.appName)
+    fetchApiData() {
+      fetch('http://localhost:3000/transport')
+        .then(response => response.json())
+        .then(data => {
+          this.apiData = data;
+        })
+        .catch(error => {
+          console.log(error);
+        })
     },
-  },
+    methodFoo() {
+    console.log(this.appName)
+    },
+  }
 }
 </script>
 
@@ -49,4 +62,5 @@ export default {
 .title .navbar-brand {
   margin-left: 20px;
 }
+
 </style>
