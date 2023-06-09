@@ -2,8 +2,18 @@
   <div>
     <form @submit.prevent="handleSearch">
       <b>Insira o destino e o peso</b>
-      <input label="Destino" v-model="destino">  <!-- TODO tem que receber as cidades disponíveis e fazer um dropdown -->
-      <input label="Peso" v-model="peso">
+      <label>
+        <b>Destino</b>
+        <select v-model="transportDestiny">
+          <option v-for="(city, idx) in cities" :key="idx">
+            {{ city }}
+          </option>
+        </select>
+      </label>
+      <label>
+        <b>Peso</b>
+        <input v-model="transportWeight">
+      </label>
       <button>Analisar</button>
     </form>
   </div>
@@ -11,26 +21,43 @@
 
 <script>
   export default {
+    props: {
+      cities: {
+        type: Array,
+        required: true
+      }
+    },
     data() {
       return {
-        destino: '',
-        peso:''
+        transportDestiny: '',
+        transportWeight:''
       }
     },
     methods: {
       handleSearch() {
-        // TODO função handleSubmit:
-        // Se tiver destino E peso passar o resultado pro componente de resultado
-        // em caso contrário, abrir um modal e zerar os valores de destino e peso
-        console.log(this.destino, this.peso)
+        if (this.transportDestiny && this.transportWeight) {
+          console.log(this.transportDestiny, this.transportWeight) // TODO passar infos de volta pro pai
+        } else {
+          console.log("Falta info") // TODO função para abrir modal
+        }
       }
     }
   }
 </script>
 
 <style scoped>
+  /* TODO Refazer os estilos de maneira mais organizada */
   input {
     margin: 10px;
+    display: block;
+  }
+
+  label {
+    margin: 10px;
+    display: block;
+  }
+
+  b {
     display: block;
   }
 </style>

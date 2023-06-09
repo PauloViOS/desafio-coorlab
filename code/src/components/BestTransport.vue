@@ -7,7 +7,7 @@
         </b-navbar-brand>
       </b-navbar>
     </div>
-    <search-transport-form />
+    <search-transport-form :cities="destinyCities"/> <!-- TODO passar as ciddades de destino como prop  -->
   </div>
 </template>
 
@@ -27,10 +27,16 @@ export default {
   },
   data() {
     const appName = '',
-    apiData = null
+    apiData = null,
+    destinyCities = []
 
     return {
-      appName, apiData
+      appName, apiData, destinyCities
+    }
+  },
+  watch: {
+    apiData(newValue) {
+      this.getDestinyCities(newValue)
     }
   },
   created() {
@@ -53,6 +59,13 @@ export default {
         })
     },
     // TODO função pra pegar as cidades disponíveis como destino
+    getDestinyCities(transportList) {
+      for ( let transport of transportList) {
+        if ( !this.destinyCities.includes(transport.city) ) {
+          this.destinyCities.push(transport.city)
+        }
+      }
+    },
     methodFoo() {
     console.log(this.appName)
     },
