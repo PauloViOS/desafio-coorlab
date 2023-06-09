@@ -1,12 +1,14 @@
 <template>
-  <div class="title">
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand class="ml-2">
-        <b>{{ appName }}</b>
-      </b-navbar-brand>
-    </b-navbar>
+  <div>
+    <div class="title">
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand class="ml-2">
+          <b>{{ appName }}</b>
+        </b-navbar-brand>
+      </b-navbar>
+    </div>
+    <search-transport-form />
   </div>
-
 </template>
 
 <script>
@@ -15,10 +17,13 @@ import {
   BNavbarBrand,
 } from 'bootstrap-vue'
 
+import searchTransportForm from './searchTransportForm.vue'
+
 export default {
   components: {
     BNavbar,
     BNavbarBrand,
+    searchTransportForm
   },
   data() {
     const appName = '',
@@ -47,6 +52,7 @@ export default {
           console.log(error);
         })
     },
+    // TODO função pra pegar as cidades disponíveis como destino
     methodFoo() {
     console.log(this.appName)
     },
