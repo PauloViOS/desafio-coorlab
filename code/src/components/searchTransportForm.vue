@@ -5,14 +5,15 @@
       <label>
         <b>Destino</b>
         <select v-model="transportDestiny">
+          <option value="" hidden>Selecione o destino</option>
           <option v-for="(city, idx) in cities" :key="idx">
             {{ city }}
           </option>
         </select>
       </label>
       <label>
-        <b>Peso</b>
-        <input v-model="transportWeight">
+        <b>Peso</b> <!--TODO deveria aceitar vírgula?-->
+        <input type="number" v-model="transportWeight" placeholder="Peso da carga em kg">
       </label>
       <button>Analisar</button>
     </form>
