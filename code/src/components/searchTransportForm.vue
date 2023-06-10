@@ -35,11 +35,11 @@
     },
     methods: {
       handleSearch() {
+        let searchParameters = []
         if (this.transportDestiny && this.transportWeight) {
-          console.log(this.transportDestiny, this.transportWeight) // TODO passar infos de volta pro pai
-        } else {
-          console.log("Falta info") // TODO função para abrir modal
+          searchParameters.push(this.transportDestiny, this.transportWeight)  
         }
+        this.$emit('search', searchParameters)
       }
     }
   }

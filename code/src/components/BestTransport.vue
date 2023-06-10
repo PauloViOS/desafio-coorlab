@@ -7,7 +7,7 @@
         </b-navbar-brand>
       </b-navbar>
     </div>
-    <search-transport-form :cities="destinyCities"/> <!-- TODO passar as ciddades de destino como prop  -->
+    <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/> 
   </div>
 </template>
 
@@ -28,10 +28,11 @@ export default {
   data() {
     const appName = '',
     apiData = null,
-    destinyCities = []
+    destinyCities = [],
+    searchParameters = []
 
     return {
-      appName, apiData, destinyCities
+      appName, apiData, destinyCities, searchParameters
     }
   },
   watch: {
@@ -40,14 +41,10 @@ export default {
     }
   },
   created() {
-    // Implemente aqui o GET dos dados da API REST
-    // para que isso ocorra na inicialização da pagina
-
     this.fetchApiData();
     this.appName = 'Melhor Frete'
   },
   methods: {
-    // Implemente aqui os metodos utilizados na pagina
     fetchApiData() {
       fetch('http://localhost:3000/transport')
         .then(response => response.json())
@@ -58,7 +55,6 @@ export default {
           console.log(error);
         })
     },
-    // TODO função pra pegar as cidades disponíveis como destino
     getDestinyCities(transportList) {
       for ( let transport of transportList) {
         if ( !this.destinyCities.includes(transport.city) ) {
@@ -66,9 +62,16 @@ export default {
         }
       }
     },
-    methodFoo() {
-    console.log(this.appName)
-    },
+    handleSearchParameters (searchParameters) { 
+      if (searchParameters) {
+        // TODO searchCheapestTransport
+        // TODO searchFastestTransport
+        console.log(searchParameters)
+      } else {
+        // TODO abrir modal
+        console.log("Falstam infos de busca")
+      }
+    }
   }
 }
 </script>
