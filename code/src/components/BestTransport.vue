@@ -7,7 +7,8 @@
         </b-navbar-brand>
       </b-navbar>
     </div>
-    <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/> 
+    <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/>
+    <search-result :fastestTransport="fastestTransport" :cheapestTransport="cheapestTransport"/>
   </div>
 </template>
 
@@ -29,10 +30,12 @@ export default {
     const appName = '',
     apiData = null,
     destinyCities = [],
-    searchParameters = []
+    searchParameters = [],
+    fastestTransport = {},
+    cheapestTransport = {}
 
     return {
-      appName, apiData, destinyCities, searchParameters
+      appName, apiData, destinyCities, searchParameters, fastestTransport, cheapestTransport
     }
   },
   watch: {
@@ -56,7 +59,7 @@ export default {
         })
     },
     getDestinyCities(transportList) {
-      for ( let transport of transportList) {
+      for (let transport of transportList) {
         if ( !this.destinyCities.includes(transport.city) ) {
           this.destinyCities.push(transport.city)
         }
@@ -64,13 +67,63 @@ export default {
     },
     handleSearchParameters (searchParameters) { 
       if (searchParameters) {
-        // TODO searchCheapestTransport
-        // TODO searchFastestTransport
-        console.log(searchParameters)
+        this.cheapestTransport = this.searchCheapestTransport(searchParameters)
+        this.fastestTransport = this.searchFastestTransport(searchParameters)
       } else {
         // TODO abrir modal
         console.log("Falstam infos de busca")
       }
+    },
+    searchFastestTransport(parameters) {
+      let destiny = parameters[0]
+      let costCategory = this.getCostCategory(parameters[1])
+      let fastest = {
+        'name': '',
+        'lead_time': '999h',
+        'cost': ''
+      }
+
+      for (let transport of this.apiData) {
+        let leadTimeTransport = parseInt(transport.lead_time.slice(0,-1))
+        let leadTimeFastest = parseInt(fastest.lead_time.slice(0,-1))
+        if (transport.city === destiny && leadTimeTransport < leadTimeFastest) {
+          fastest.name = transport.name
+          fastest.lead_time = transport.lead_time
+          fastest.cost = transport[costCategory]
+        }
+      }
+
+      return fastest
+    },
+    searchCheapestTransport(parameters) {
+      let destiny = parameters[0]
+      let costCategory = this.getCostCategory(parameters[1])
+      let cheapest = {
+        'name': '',
+        'lead_time': '',
+        'cost': 'R$ 9999'
+      }
+
+      for (let transport of this.apiData) {
+        let costTransport = parseFloat(transport[costCategory].slice(3))
+        let costCheapest = parseFloat(cheapest.cost.slice(3))
+        if (transport.city === destiny && costTransport < costCheapest) {
+          cheapest.name = transport.name
+          cheapest.lead_time = transport.lead_time
+          cheapest.cost = transport[costCategory]
+        }
+      }
+
+      return cheapest
+    },
+    getCostCategory(weight) {
+      let costCategory = ''
+      if (weight <= 100) {
+        costCategory = 'cost_transport_light'
+      } else {
+        costCategory = 'cost_transport_heavy'
+      }
+      return costCategory
     }
   }
 }
