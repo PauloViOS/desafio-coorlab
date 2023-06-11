@@ -19,12 +19,14 @@ import {
 } from 'bootstrap-vue'
 
 import searchTransportForm from './searchTransportForm.vue'
+import searchResult from './searchResult.vue'
 
 export default {
   components: {
     BNavbar,
     BNavbarBrand,
-    searchTransportForm
+    searchTransportForm,
+    searchResult
   },
   data() {
     const appName = '',
