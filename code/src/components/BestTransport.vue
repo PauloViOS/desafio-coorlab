@@ -68,12 +68,12 @@ export default {
       }
     },
     handleSearchParameters (searchParameters) { 
-      if (searchParameters) {
+      if (searchParameters.length === 2) { // TODO é a melhor forma de fazer isso?
         this.cheapestTransport = this.searchCheapestTransport(searchParameters)
         this.fastestTransport = this.searchFastestTransport(searchParameters)
       } else {
         // TODO abrir modal
-        console.log("Falstam infos de busca")
+        console.log("Faltam infos de busca")
       }
     },
     searchFastestTransport(parameters) {
