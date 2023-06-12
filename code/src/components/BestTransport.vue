@@ -11,10 +11,17 @@
             <b-container>
                 <b-row>
                     <b-col>
-                        <search-transport-form :cities="destinationCities" @search="handleSearchParameters"/>
+                        <search-transport-form
+                            :cities="destinationCities"
+                            @search="handleSearchParameters"
+                        />
                     </b-col>
                     <b-col>
-                        <search-result :fastestTransport="fastestTransport" :cheapestTransport="cheapestTransport"/>
+                        <search-result
+                            :fastestTransport="fastestTransport"
+                            :cheapestTransport="cheapestTransport"
+                            @cleanSearchParameters="cleanSearchParameters"
+                        />
                     </b-col>
                 </b-row>
             </b-container>
@@ -142,6 +149,10 @@ export default {
         costCategory = 'cost_transport_heavy'
       }
       return costCategory
+    },
+    cleanSearchParameters() {
+        this.fastestTransport = {}
+        this.cheapestTransport = {} // TODO como fazer pra esses valores serem atualizados no form também?
     }
   }
 }

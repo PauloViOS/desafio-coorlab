@@ -74,7 +74,9 @@ export default {
     }
   },
   methods: {
-    
+    cleanSearchParameters() {
+        this.$emit('cleanSearchParameters')
+    }
   },
   computed: {
     hasData() {
