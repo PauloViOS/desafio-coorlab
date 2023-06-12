@@ -11,7 +11,7 @@
             <b-container>
                 <b-row>
                     <b-col>
-                        <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/>
+                        <search-transport-form :cities="destinationCities" @search="handleSearchParameters"/>
                     </b-col>
                     <b-col>
                         <search-result :fastestTransport="fastestTransport" :cheapestTransport="cheapestTransport"/>
@@ -47,18 +47,18 @@ export default {
   data() {
     const appName = '',
     apiData = null,
-    destinyCities = [],
+    destinationCities = [],
     searchParameters = [],
     fastestTransport = {},
     cheapestTransport = {}
 
     return {
-      appName, apiData, destinyCities, searchParameters, fastestTransport, cheapestTransport
+      appName, apiData, destinationCities, searchParameters, fastestTransport, cheapestTransport
     }
   },
   watch: {
     apiData(newValue) {
-      this.getDestinyCities(newValue)
+      this.getDestinationCities(newValue)
     }
   },
   created() {
@@ -76,10 +76,10 @@ export default {
           console.log(error);
         })
     },
-    getDestinyCities(transportList) {
+    getDestinationCities(transportList) {
       for (let transport of transportList) {
-        if ( !this.destinyCities.includes(transport.city) ) {
-          this.destinyCities.push(transport.city)
+        if ( !this.destinationCities.includes(transport.city) ) {
+          this.destinationCities.push(transport.city)
         }
       }
     },
@@ -93,7 +93,7 @@ export default {
       }
     },
     searchFastestTransport(parameters) {
-      let destiny = parameters[0]
+      let destination = parameters[0]
       let costCategory = this.getCostCategory(parameters[1])
       let fastest = {
         'name': '',
@@ -104,7 +104,7 @@ export default {
       for (let transport of this.apiData) {
         let leadTimeTransport = parseInt(transport.lead_time.slice(0,-1))
         let leadTimeFastest = parseInt(fastest.lead_time.slice(0,-1))
-        if (transport.city === destiny && leadTimeTransport < leadTimeFastest) {
+        if (transport.city === destination && leadTimeTransport < leadTimeFastest) {
           fastest.name = transport.name
           fastest.lead_time = transport.lead_time
           fastest.cost = transport[costCategory]
@@ -114,7 +114,7 @@ export default {
       return fastest
     },
     searchCheapestTransport(parameters) {
-      let destiny = parameters[0]
+      let destination = parameters[0]
       let costCategory = this.getCostCategory(parameters[1])
       let cheapest = {
         'name': '',
@@ -125,7 +125,7 @@ export default {
       for (let transport of this.apiData) {
         let costTransport = parseFloat(transport[costCategory].slice(3))
         let costCheapest = parseFloat(cheapest.cost.slice(3))
-        if (transport.city === destiny && costTransport < costCheapest) {
+        if (transport.city === destination && costTransport < costCheapest) {
           cheapest.name = transport.name
           cheapest.lead_time = transport.lead_time
           cheapest.cost = transport[costCategory]
