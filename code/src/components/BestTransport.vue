@@ -1,21 +1,34 @@
 <template>
-  <div>
-    <div class="title">
-      <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand class="ml-2">
-          <b>{{ appName }}</b>
-        </b-navbar-brand>
-      </b-navbar>
-    </div>
-    <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/>
-    <search-result :fastestTransport="fastestTransport" :cheapestTransport="cheapestTransport"/>
-  </div>
+    <b-container>
+        <div>
+            <div class="title">
+                <b-navbar toggleable="lg" type="dark" variant="info">
+                    <b-navbar-brand class="ml-2">
+                        <b>{{ appName }}</b>
+                    </b-navbar-brand>
+                </b-navbar>
+            </div>
+            <b-container>
+                <b-row>
+                    <b-col>
+                        <search-transport-form :cities="destinyCities" @search="handleSearchParameters"/>
+                    </b-col>
+                    <b-col>
+                        <search-result :fastestTransport="fastestTransport" :cheapestTransport="cheapestTransport"/>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </div>
+    </b-container>
 </template>
 
 <script>
 import {
   BNavbar,
   BNavbarBrand,
+  BContainer,
+  BRow,
+  BCol
 } from 'bootstrap-vue'
 
 import searchTransportForm from './searchTransportForm.vue'
@@ -25,6 +38,9 @@ export default {
   components: {
     BNavbar,
     BNavbarBrand,
+    BContainer,
+    BRow,
+    BCol,
     searchTransportForm,
     searchResult
   },
