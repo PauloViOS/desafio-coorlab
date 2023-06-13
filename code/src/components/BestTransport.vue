@@ -2,7 +2,7 @@
     <b-container>
         <div>
             <div class="title">
-                <b-navbar toggleable="lg" type="dark" variant="info">
+                <b-navbar toggleable="lg" type="light" variant="info">
                     <b-navbar-brand class="ml-2">
                         <b>{{ appName }}</b>
                     </b-navbar-brand>
@@ -13,6 +13,7 @@
                     <b-col>
                         <search-transport-form
                             :cities="destinationCities"
+                            ref="searchTransportForm"
                             @search="handleSearchParameters"
                         />
                     </b-col>
@@ -26,6 +27,7 @@
                 </b-row>
             </b-container>
         </div>
+        <no-search-parameters-modal ref="noSearchParametersModal" />
     </b-container>
 </template>
 
@@ -40,6 +42,7 @@ import {
 
 import searchTransportForm from './searchTransportForm.vue'
 import searchResult from './searchResult.vue'
+import noSearchParametersModal from './noSearchParametersModal.vue'
 
 export default {
   components: {
@@ -49,8 +52,9 @@ export default {
     BRow,
     BCol,
     searchTransportForm,
-    searchResult
-  },
+    searchResult,
+    noSearchParametersModal
+},
   data() {
     const appName = '',
     apiData = null,
@@ -95,7 +99,7 @@ export default {
         this.cheapestTransport = this.searchCheapestTransport(searchParameters)
         this.fastestTransport = this.searchFastestTransport(searchParameters)
       } else {
-        // TODO abrir modal
+        this.$refs.noSearchParametersModal.openModal()
         console.log("Faltam infos de busca")
       }
     },
@@ -152,7 +156,8 @@ export default {
     },
     cleanSearchParameters() {
         this.fastestTransport = {}
-        this.cheapestTransport = {} // TODO como fazer pra esses valores serem atualizados no form também?
+        this.cheapestTransport = {}
+        this.$refs["searchTransportForm"].clearSearchFields()
     }
   }
 }

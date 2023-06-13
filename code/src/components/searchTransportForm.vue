@@ -53,7 +53,12 @@ export default {
   data() {
     return {
       transportDestination: '',
-      transportWeight:''
+      transportWeight: ''
+    }
+  },
+  watch: {
+    transportWeight(newValue) {
+        this.transportWeight = newValue.replace(/\D/g,'')
     }
   },
   methods: {
@@ -63,6 +68,10 @@ export default {
         searchParameters.push(this.transportDestination, this.transportWeight)  
       }
       this.$emit('search', searchParameters)
+    },
+    clearSearchFields() {
+        this.transportDestination = ''
+        this.transportWeight = ''
     }
   }
 }
