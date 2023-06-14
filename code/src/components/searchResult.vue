@@ -1,48 +1,53 @@
 <template>
   <h1 v-if="!hasData">Nenhum dado selecionado</h1>
   <div v-else>
-    Essas são as melhores alternativas de frete que encontramos para você.
-    <b-container>
+    <b-container class="d-flex flex-column align-items-start justify-content-center">
+      <p>Essas são as melhores alternativas de frete que encontramos para você.</p>
         <b-row>
-            <b-col>
-                <b-card img-src="" img-alt="" img-left class="">
+            <b-col cols="7">
+                <b-card img-left class="d-flex">
                     <b-card-text>
-                        <b>Frete com menor valor</b>
-                        {{ cheapestTransport.name }}
-                        {{ cheapestTransport.lead_time }}
+                        <b class="card-title">Frete com menor valor</b>
+                        <p>Transportadora: {{ cheapestTransport.name }}</p>
+                        <p>Tempo estimado: {{ cheapestTransport.lead_time }}</p>
                     </b-card-text>
                 </b-card>
             </b-col>
-            <b-col>
-                <b-card img-src="" img-alt="" img-left class="">
+            <b-col cols="5">
+                <b-card>
                     <b-card-text>
-                        <b>Preço</b>
+                        <b class="card-title">Preço</b>
                         {{ cheapestTransport.cost }}
                     </b-card-text>
                 </b-card>
             </b-col>
         </b-row>
+        <br>
         <b-row>
-            <b-col>
-                <b-card img-src="" img-alt="" img-left class="">
+            <b-col cols="7">
+                <b-card img-left>
+                    <b-card-img src="../assets/clock-regular.svg"/>
                     <b-card-text>
-                        <b>Frete mais rápido</b>
-                        {{ fastestTransport.name }}
-                        {{ fastestTransport.lead_time }}
+                        <b class="card-title">Frete mais rápido</b>
+                        <p>Transportadora: {{ fastestTransport.name }}</p>
+                        <p>Tempo estimado: {{ fastestTransport.lead_time }}</p>
                     </b-card-text>
                 </b-card>
             </b-col>
-            <b-col>
+            <b-col cols="5">
                 <b-card img-src="" img-alt="" img-left class="">
                     <b-card-text>
-                        <b>Preço</b>
+                        <b class="card-title">Preço</b>
                         {{ fastestTransport.cost }}
                     </b-card-text>
                 </b-card>
             </b-col>
         </b-row>
     </b-container>
-    <b-button @click="cleanSearchParameters">Limpar</b-button> <!--TODO função pra limpar os valores de fastest e cheapest-->
+    <br>
+    <div>
+        <b-button variant="primary" @click="cleanSearchParameters">Limpar</b-button>
+    </div>
   </div>
 </template>
 
@@ -85,3 +90,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.card-title {
+    display: block;
+}
+</style>

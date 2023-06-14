@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <b>Insira o destino e o peso</b>
-    <b-form @submit.prevent="handleSearch">
-      <b-form-group
-        id="destination-group"
-        label="Destino"
-        label-for="destination-input"
-      >
-        <b-form-select v-model="transportDestination" :options="cities"> <!-- TODO ainda não tá estilizado-->
-            <b-form-select-option value="" hidden selected>Selecione o destino</b-form-select-option>
-        </b-form-select>
-      </b-form-group>
+    <div class="d-flex flex-column align-items-center ">
+        <b>Insira o destino e o peso</b>
+        <b-form @submit.prevent="handleSearch">
+            <b-form-group
+                id="destination-group"
+                label="Destino"
+                label-for="destination-input"
+            >
+                <b-form-select v-model="transportDestination" :options="cities"> <!-- TODO ainda não tá estilizado-->
+                    <b-form-select-option value="" hidden selected>Selecione o destino</b-form-select-option>
+                </b-form-select>
+            </b-form-group>
 
-      <b-form-group
-        id="weight-group"
-        label="Peso"
-        label-for="weight-input"
-      >
-        <b-form-input type="number" v-model="transportWeight" placeholder="Peso da carga em kg"></b-form-input>
-      </b-form-group>
-      
-      <b-button type="submit" variant="primary">Analisar</b-button> <!-- TODO mudar cor / input não está aceitando . e ,-->
-    </b-form>
-  </div>
+            <b-form-group
+                id="weight-group"
+                label="Peso"
+                label-for="weight-input"
+            >
+                <b-form-input type="number" v-model="transportWeight" placeholder="Peso da carga em kg"></b-form-input>
+            </b-form-group>
+        
+            <b-button type="submit" variant="primary">Analisar</b-button> <!-- TODO mudar cor / input não está aceitando . e ,-->
+        </b-form>
+    </div>
 </template>
 
 <script>
@@ -54,11 +54,6 @@ export default {
     return {
       transportDestination: '',
       transportWeight: ''
-    }
-  },
-  watch: {
-    transportWeight(newValue) {
-        this.transportWeight = newValue.replace(/\D/g,'')
     }
   },
   methods: {

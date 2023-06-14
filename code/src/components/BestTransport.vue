@@ -1,41 +1,38 @@
 <template>
-    <b-container>
+    <div class="d-flex flex-column">
+        <div class="title">
+            <b-navbar toggleable="lg" type="light" variant="info">
+                <b-navbar-brand class="ml-2">
+                    <b>{{ appName }}</b>
+                </b-navbar-brand>
+            </b-navbar>
+        </div>
         <div>
-            <div class="title">
-                <b-navbar toggleable="lg" type="light" variant="info">
-                    <b-navbar-brand class="ml-2">
-                        <b>{{ appName }}</b>
-                    </b-navbar-brand>
-                </b-navbar>
-            </div>
-            <b-container>
-                <b-row>
-                    <b-col>
-                        <search-transport-form
-                            :cities="destinationCities"
-                            ref="searchTransportForm"
-                            @search="handleSearchParameters"
-                        />
-                    </b-col>
-                    <b-col>
-                        <search-result
-                            :fastestTransport="fastestTransport"
-                            :cheapestTransport="cheapestTransport"
-                            @cleanSearchParameters="cleanSearchParameters"
-                        />
-                    </b-col>
-                </b-row>
-            </b-container>
+            <b-row>
+                <b-col cols="6">
+                    <search-transport-form
+                        :cities="destinationCities"
+                        ref="searchTransportForm"
+                        @search="handleSearchParameters"
+                    />
+                </b-col>
+                <b-col cols="6">
+                    <search-result
+                        :fastestTransport="fastestTransport"
+                        :cheapestTransport="cheapestTransport"
+                        @cleanSearchParameters="cleanSearchParameters"
+                    />
+                </b-col>
+            </b-row>
         </div>
         <no-search-parameters-modal ref="noSearchParametersModal" />
-    </b-container>
+    </div>
 </template>
 
 <script>
 import {
   BNavbar,
   BNavbarBrand,
-  BContainer,
   BRow,
   BCol
 } from 'bootstrap-vue'
@@ -48,7 +45,6 @@ export default {
   components: {
     BNavbar,
     BNavbarBrand,
-    BContainer,
     BRow,
     BCol,
     searchTransportForm,
